@@ -1,0 +1,115 @@
+// return false;     
+$(document).ready(function () {
+    $('#form').submit(function () {
+        errorcheck = 0;
+
+        // Error removing if input is correct/valid
+        var removeErr = document.getElementsByClassName('error');
+        for (i = 0; i < removeErr.length; i++) {
+            removeErr[i].innerHTML = "";
+        }
+
+        var letters = /^[A-Za-z\s]+$/;
+        var validRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        var fname = $("#fname").val();
+        fname = fname.trim();
+        var lname = $("#lname").val();
+        lname = lname.trim();
+        var email = $("#email").val();
+        email = email.trim();
+        var phone = $("#phone").val();
+        phone = phone.trim();
+        var password = $("#password").val();
+        password = password.trim();
+        var cpassword = $("#cpassword").val();
+        cpassword = cpassword.trim();
+        var gender = "";
+        var ele = document.getElementsByName('gender');
+        for (i = 0; i < ele.length; i++) {
+            if (ele[i].checked) {
+                gender = ele[i].value;
+            }
+        }
+
+        // first name validation
+        if (fname == "") {
+            $('#fnameErr').html("Please enter your first name");
+            errorcheck = 1;
+        } else if (!fname.match(letters)) {
+            $('#fnameErr').html("Please enter characters only");
+            errorcheck = 1;
+        } else if (fname.length < 3) {
+            $('#fnameErr').html("Please enter at least 3 characters");
+            errorcheck = 1;
+        }
+
+        // last name validation
+        if (lname == "") {
+            $('#lnameErr').html("Please enter your last name");
+            errorcheck = 1;
+        } else if (!lname.match(letters)) {
+            $('#lnameErr').html("Please enter characters only");
+            errorcheck = 1;
+        } else if (lname.length < 3) {
+            $('#lnameErr').html("Please enter at least 3 characters");
+            errorcheck = 1;
+        }
+
+        // email validation
+        if (email == null || email == "") {
+            $('#emailErr').html("Please enter your email");
+            errorcheck = 1;
+        } else if (!email.match(validRegex)) {
+            $('#emailErr').html("Please enter valid email");
+            errorcheck = 1;
+        }
+
+        // phone number validation
+        if (phone == "") {
+            $('#phoneErr').html("Please enter your phone number");
+            errorcheck = 1;
+        } else if (isNaN(phone)) {
+            $('#phoneErr').html("Please enter numeric only");
+            errorcheck = 1;
+        } else if (phone.length != 10) {
+            $('#phoneErr').html("please enter 10 digit only");
+            errorcheck = 1;
+        }
+
+        // password validation
+        if (password == "") {
+            $('#passwordErr').html("Please enter your password");
+            errorcheck = 1;
+        }
+
+        // confirm password validation
+        if (cpassword == "") {
+            $('#cpasswordErr').html("Please enter your confirm password");
+            errorcheck = 1;
+        } else if (cpassword != password) {
+            $('#cpasswordErr').html("confirm password not matched with password");
+        }
+
+        // gender validation
+        if (gender == "") {
+            $('#genderErr').html("Please select your gender");
+            errorcheck = 1;
+        }
+
+        if (errorcheck == 0) {
+            console.log('no error continue form submission');
+        } else {
+            return false;
+        }
+    });
+});
+// <!-- script for delete confirmation -->
+function confirmation() {
+    var result = confirm("Are you sure to delete?");
+    if (result) {
+        console.log('success');
+    } else {
+        return false;
+    }
+}
