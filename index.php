@@ -20,6 +20,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gender = trim($_POST['gender']);
     $created_date = date("l jS \of F Y h:i:s A");
 
+    // file validation
+    $target_dir = "assets/images/";
+    $file = $_FILES['file']['name'];
+    $target_file = $target_dir . basename($_FILES["file"]["name"]);
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    $check = getimagesize($_FILES["file"]["tmp_name"]);
+    $allowed_image_extension = array("png", "jpg", "jpeg");
+
+    // file validation
+    if (empty($_FILES["file"]["name"])) {
+        $fileErr = 'Please select image';
+        $errorcheck = 1;
+    }
+    // Check file size
+    elseif ($_FILES["file"]["size"] > 50000) {
+        $fileErr = 'Sorry, your file is greater than 50kb.';
+        $errorcheck = 1;
+    } elseif (!in_array($imageFileType, $allowed_image_extension)) {
+        $fileErr = 'Sorry, only JPG, JPEG & PNG files are allowed.';
+        $errorcheck = 1;
+    }
+
     // first name validation
     if (empty($fname)) {
         $fnameErr = "Please enter your first name";
@@ -27,11 +49,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (!preg_match("/^[a-zA-Z-' ]*$/", $fname)) {
         $fnameErr = "Please enter characters only";
         $errorcheck = 1;
-    } else if (strlen($fname) < 3){
+    } else if (strlen($fname) < 3) {
         $fnameErr = "Please enter at least 3 characters";
         $errorcheck = 1;
     }
-    
+
     // last name validation
     if (empty($lname)) {
         $lnameErr = "Please enter your last name";
@@ -39,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (!preg_match("/^[a-zA-Z-' ]*$/", $lname)) {
         $lnameErr = "Please enter characters only";
         $errorcheck = 1;
-    } else if (strlen($lname) < 3){
+    } else if (strlen($lname) < 3) {
         $lnameErr = "Please enter at least 3 characters";
         $errorcheck = 1;
     }
@@ -81,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($cpassword)) {
         $cpasswordErr = "Please enter your confirm password";
         $errorcheck = 1;
-    }elseif($password != $cpassword){
+    } elseif ($password != $cpassword) {
         $cpasswordErr = "confirm password not matched with password";
         $errorcheck = 1;
     }
@@ -94,18 +116,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($errorcheck == 0) {
 
-        // $sql = "INSERT INTO user (name, email, city) 
-        $sql = "INSERT INTO users (first_name, last_name, email, phone_number, password, gender, created_date, modified_date) 
-        VALUES ('$fname','$lname','$email','$phone','$password','$gender', '$created_date', '$modified_date') ";
+        // insertion data in database 
+        $sql = "INSERT INTO users (first_name, last_name, email, phone_number, password, gender, file, created_date, modified_date) 
+        VALUES ('$fname','$lname','$email','$phone','$password','$gender', '$file', '$created_date', '$modified_date') ";
         $result = mysqli_query($conn, $sql);
 
         if ($result) {
+            move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
             header("location: login.php");
         } else {
             echo mysqli_error($conn);
         }
     }
-
 }
 
 ?>
@@ -127,6 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./assets/js/script.js"></script>
 </head>
+
 <body>
     <!----------------------------------- navbar -------------------------------------->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -165,35 +188,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container mt-5">
         <h1>Please Register Here</h1>
         <hr><br>
-        <form class="row g-3" action="" method="post" id="form">
+        <form class="row g-3" action="" method="post" id="form" enctype="multipart/form-data">
+            <div class="col-md-4">
+                <label for="file" class="form-label">Upload file</label>
+                <span class="error" id="fileErr">*<?php echo $fileErr; ?></span>
+                <input type="file" class="form-control" id="file" name="file">
+            </div>
             <div class="col-md-6">
                 <label for="fname" class="form-label">First Name</label>
-                <span class="error" id="fnameErr" name="fnameErr" >*<?php echo $fnameErr; ?></span>
+                <span class="error" id="fnameErr" name="fnameErr">*<?php echo $fnameErr; ?></span>
                 <input type="text" class="form-control" placeholder="Enter your first name" value="<?php echo $fname; ?>" id="fname" name="fname">
             </div>
             <div class="col-md-6">
                 <label for="lname" class="form-label">Last Name</label>
-                <span class="error" id="lnameErr" name="lnameErr" >*<?php echo $lnameErr; ?></span>
+                <span class="error" id="lnameErr" name="lnameErr">*<?php echo $lnameErr; ?></span>
                 <input type="text" class="form-control" placeholder="Enter your last name" value="<?php echo $lname; ?>" id="lname" name="lname">
             </div>
             <div class="col-md-6">
                 <label for="email" class="form-label">E-Mail</label>
-                <span class="error" id="emailErr" name="emailErr" >*<?php echo $emailErr; ?></span>
+                <span class="error" id="emailErr" name="emailErr">*<?php echo $emailErr; ?></span>
                 <input type="text" class="form-control" placeholder="Enter your email" value="<?php echo $email; ?>" id="email" name="email">
             </div>
             <div class="col-md-6">
                 <label for="phone" class="form-label">Phone Number</label>
-                <span class="error" id="phoneErr" name="phoneErr" >*<?php echo $phoneErr; ?></span>
+                <span class="error" id="phoneErr" name="phoneErr">*<?php echo $phoneErr; ?></span>
                 <input type="number" class="form-control" placeholder="Enter your phone number" value="<?php echo $phone; ?>" id="phone" name="phone">
             </div>
             <div class="col-md-6">
                 <label for="password" class="form-label">Password</label>
-                <span class="error" id="passwordErr" name="passwordErr" >*<?php echo $passwordErr; ?></span>
+                <span class="error" id="passwordErr" name="passwordErr">*<?php echo $passwordErr; ?></span>
                 <input type="password" class="form-control" placeholder="Enter your password" value="<?php echo $password; ?>" id="password" name="password">
             </div>
             <div class="col-md-6">
                 <label for="cpassword" class="form-label">Confirm Password</label>
-                <span class="error" id="cpasswordErr" name="cpasswordErr" >*<?php echo $cpasswordErr; ?></span>
+                <span class="error" id="cpasswordErr" name="cpasswordErr">*<?php echo $cpasswordErr; ?></span>
                 <input type="password" class="form-control" placeholder="Enter your confirm password" value="<?php echo $cpassword; ?>" id="cpassword" name="cpassword">
             </div>
             <div class="col-md-6">
@@ -206,20 +234,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input class="form-check-input" type="radio" id="gender2" <?php echo ($gender == 'Female') ? 'checked' : '' ?> name="gender" value="Female">
                     <label class="form-check-label" for="gender">Female</label>
                 </div>
-                <span class="error" id="genderErr"  name="genderErr"> *<?php echo $genderErr; ?> </span>
+                <span class="error" id="genderErr" name="genderErr"> *<?php echo $genderErr; ?> </span>
             </div>
             <div class="col-12">
+                <input type="text" class="mysubmit" name="mysubmit" id="mysubmit" value="mysubmit" style="display: none;">
                 <button type="submit" name="submit" id="submit" class="btn btn-primary">Register</button>
             </div>
         </form>
     </div>
-
-
-
-
-
-
-
 
     <!-- Optional JavaScript; choose one of the two! -->
 

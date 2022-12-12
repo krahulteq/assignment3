@@ -13,6 +13,7 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
     $email = $row[3];
     $phone = $row[4];
     $gender = $row[6];
+    $file2 = $row[7];
 
 ?>
     <!doctype html>
@@ -68,11 +69,15 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
                 </div>
             </div>
         </nav>
+
         <!----------------------------------- Registeration form -------------------------------------->
         <div class="container mt-5">
-            <h1>Please Register Here</h1>
+            <h1>User Details</h1>
             <hr><br>
             <form class="row g-3" action="" method="post" id="form">
+                <div class="col-md-12">
+                    <img src="assets/images/<?php echo $file2; ?>" alt="">
+                </div>
                 <div class="col-md-6">
                     <label for="fname" class="form-label">First Name</label>
                     <span class="error" id="fnameErr" name="fnameErr">*<?php echo $fnameErr; ?></span>
@@ -111,13 +116,6 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
             </form>
         </div>
 
-
-
-
-
-
-
-
         <!-- Optional JavaScript; choose one of the two! -->
 
         <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -132,7 +130,7 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
 
     </html>
 <?php
-}else{
+} else {
     header("location: login.php");
 }
 ?>

@@ -1,4 +1,3 @@
-// return false;     
 $(document).ready(function () {
     $('#form').submit(function () {
         errorcheck = 0;
@@ -29,6 +28,37 @@ $(document).ready(function () {
         for (i = 0; i < ele.length; i++) {
             if (ele[i].checked) {
                 gender = ele[i].value;
+            }
+        }
+
+        // file validation
+        var fileInput = $('#file');
+        var fileToUpload = fileInput.val();
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+
+        var mysubmit = "";
+        mysubmit = $("#mysubmit").val();
+        mysubmit = mysubmit.trim();
+        if (mysubmit != "") {
+            if (fileToUpload == "") {
+                $('#fileErr').html("Please select image");
+                errorcheck = 1;
+            } else if (!allowedExtensions.exec(fileToUpload)) {
+                $('#fileErr').html("Sorry, only JPG, JPEG & PNG files are allowed.");
+                errorcheck = 1;
+            } else if ($('#file')[0].files[0].size > 50000) {
+                $('#fileErr').html("Sorry, your file is greater than 50kb.");
+                errorcheck = 1;
+            }
+        } else {
+            if (fileToUpload == "") {
+
+            } else if (!allowedExtensions.exec(fileToUpload)) {
+                $('#fileErr').html("Sorry, only JPG, JPEG & PNG files are allowed.");
+                errorcheck = 1;
+            } else if ($('#file')[0].files[0].size > 50000) {
+                $('#fileErr').html("Sorry, your file is greater than 50kb.");
+                errorcheck = 1;
             }
         }
 

@@ -44,6 +44,7 @@ if (isset($_SESSION['id'])) {
                         <th scope="col">Email</th>
                         <th scope="col">Phone Number</th>
                         <th scope="col">Gender</th>
+                        <th scope="col">Image</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                         <th scope="col"></th>
@@ -64,6 +65,7 @@ if (isset($_SESSION['id'])) {
                             $email = $row['email'];
                             $phone = $row['phone_number'];
                             $gender = $row['gender'];
+                            $file = $row['file'];
 
                             echo '
                                 <tr>
@@ -73,8 +75,9 @@ if (isset($_SESSION['id'])) {
                                 <td>' . $email . '</td>
                                 <td>' . $phone . '</td>
                                 <td>' . $gender . '</td>
+                                <td><img src="assets/images/'.$file.'" alt="" style="height:30px; width:50px"></td>
                                 <td><a href="view.php?id=' . $id . '">View</a></td>
-                                <td><a href="update.php?id=' . $id . '">Update</a></td>
+                                <td><a href="update.php?id=' . $id . '">Edit</a></td>
                                 <td><a onclick="return confirmation()" href="delete.php?id=' . $id . '">Delete</a></td>
                                 <td>
                                 </tr>

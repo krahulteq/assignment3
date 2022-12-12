@@ -18,6 +18,7 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
     $phone = $row[4];
     $password = $row[5];
     $gender = $row[6];
+    $file2 = $row[7];
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -32,9 +33,25 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
         $gender = trim($_POST['gender']);
         $modified_date = date("l jS \of F Y h:i:s A");
 
-        echo $fname;
-        echo $email;
-        echo $email2;
+        // file validation
+        $target_dir = "assets/images/";
+        $file = $_FILES['file']['name'];
+        $target_file = $target_dir . basename($_FILES["file"]["name"]);
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        $check = getimagesize($_FILES["file"]["tmp_name"]);
+        $allowed_image_extension = array("png", "jpg", "jpeg");
+
+        // file validation
+        if (empty($_FILES["file"]["name"])) {
+        }
+        // Check file size
+        elseif ($_FILES["file"]["size"] > 50000) {
+            $fileErr = 'Sorry, your file is greater than 50kb.';
+            $errorcheck = 1;
+        } elseif (!in_array($imageFileType, $allowed_image_extension)) {
+            $fileErr = 'Sorry, only JPG, JPEG & PNG files are allowed.';
+            $errorcheck = 1;
+        }
 
         // first name validation
         if (empty($fname)) {
@@ -112,8 +129,15 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
 
         if ($errorcheck == 0) {
 
+            if (!empty($file)) {
+                move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
+                $file2 = $file;
+            } else {
+                $file = $file2;
+            }
+
             // $sql = "INSERT INTO user (name, email, city) 
-            $sql = "UPDATE `users` SET `first_name` = '$fname', `last_name` = '$lname', `email` = '$email', `phone_number` = '$phone', `password` = '$password', `gender` = '$gender', `modified_date` = '$modified_date' where `id` = '$id'";
+            $sql = "UPDATE `users` SET `first_name` = '$fname', `last_name` = '$lname', `email` = '$email', `phone_number` = '$phone', `password` = '$password', `gender` = '$gender', `file` = '$file', `modified_date` = '$modified_date' where `id` = '$id'";
             $result = mysqli_query($conn, $sql);
 
             if ($result) {
@@ -180,9 +204,17 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
         </nav>
         <!----------------------------------- Registeration form -------------------------------------->
         <div class="container mt-5">
-            <h1>Please Register Here</h1>
+            <h1>Please Update Here</h1>
             <hr><br>
-            <form class="row g-3" action="" method="post" id="form">
+            <form class="row g-3" action="" method="post" id="form" enctype="multipart/form-data">
+                <div class="col-md-6">
+                    <label for="file" class="form-label">Upload file</label>
+                    <span class="error" id="fileErr">*<?php echo $fileErr; ?></span>
+                    <input type="file" class="form-control" id="file" name="file">
+                </div>
+                <div class="col-md-6">
+                    <img src="assets/images/<?php echo $file2; ?>" alt="">
+                </div>
                 <div class="col-md-6">
                     <label for="fname" class="form-label">First Name</label>
                     <span class="error" id="fnameErr" name="fnameErr">*<?php echo $fnameErr; ?></span>
@@ -233,13 +265,6 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
                 </div>
             </form>
         </div>
-
-
-
-
-
-
-
 
         <!-- Optional JavaScript; choose one of the two! -->
 
