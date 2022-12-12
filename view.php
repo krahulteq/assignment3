@@ -4,7 +4,7 @@ require_once 'conn.php';
 if (isset($_SESSION['id']) && isset($_GET['id'])) {
 
     $id = $_GET['id'];
-    $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
+    $sql = "SELECT * FROM `users` WHERE `id` = '$id' AND `soft_delete` = '1'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_row($result);
     // print_r($row);
