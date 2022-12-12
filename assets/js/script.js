@@ -119,6 +119,7 @@ $(document).ready(function () {
             errorcheck = 1;
         } else if (cpassword != password) {
             $('#cpasswordErr').html("confirm password not matched with password");
+            errorcheck = 1;
         }
 
         // gender validation
