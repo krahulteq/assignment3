@@ -53,18 +53,18 @@ if (isset($_SESSION['id'])) {
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT * FROM `users`";
+                    $sql = "SELECT * FROM `users` WHERE `soft_delete` = '1'";
                     $result = mysqli_query($conn, $sql);
                     $num = mysqli_num_rows($result);
                     if ($num > 0) {
                         $sr = 1;
                         while ($row = mysqli_fetch_assoc($result)) {
                             $id = $row['id'];
-                            $fname = $row['first_name'];
-                            $lname = $row['last_name'];
+                            $fname = strtoupper($row['first_name']);
+                            $lname = strtoupper($row['last_name']);
                             $email = $row['email'];
                             $phone = $row['phone_number'];
-                            $gender = $row['gender'];
+                            $gender = strtoupper($row['gender']);
                             $file = $row['file'];
 
                             echo '
