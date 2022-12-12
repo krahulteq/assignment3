@@ -134,13 +134,32 @@ $(document).ready(function () {
             return false;
         }
     });
+
+    $('#showpassword').click(function(){
+        var type = $('#password').attr('type');
+        if(type == 'password'){
+            $('#password').attr('type', 'text');
+        }else{
+            $('#password').attr('type', 'password');
+        }
+        return false;
+    });
+
+    $('#showcpassword').click(function(){
+        var type = $('#cpassword').attr('type');
+        if(type == 'password'){
+            $('#cpassword').attr('type', 'text');
+        }else{
+            $('#cpassword').attr('type', 'password');
+        }
+        return false;
+    });
+
 });
 // <!-- script for delete confirmation -->
 function confirmation() {
     var result = confirm("Are you sure to delete?");
-    if (result) {
-        console.log('success');
-    } else {
+    if (!result){
         return false;
     }
 }
