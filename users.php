@@ -14,7 +14,6 @@ if (isset($_SESSION['id'])) {
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="./assets/js/script.js"></script>
     </head>
 
     <body>
@@ -75,7 +74,7 @@ if (isset($_SESSION['id'])) {
                                 <td>' . $email . '</td>
                                 <td>' . $phone . '</td>
                                 <td>' . $gender . '</td>
-                                <td><img src="assets/images/'.$file.'" alt="" style="height:30px; width:50px"></td>
+                                <td><img src="assets/images/' . $file . '" alt="" style="height:30px; width:50px"></td>
                                 <td><a href="view.php?id=' . $id . '">View</a></td>
                                 <td><a href="update.php?id=' . $id . '">Edit</a></td>
                                 <td><a onclick="return confirmation()" href="delete.php?id=' . $id . '">Delete</a></td>

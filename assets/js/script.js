@@ -135,21 +135,47 @@ $(document).ready(function () {
         }
     });
 
-    $('#showpassword').click(function(){
+    // error removing on keyup
+    $('input[name=file]').click(function () {
+        $('#fileErr').html("");
+    });
+    $('input[name=fname]').keyup(function () {
+        $('#fnameErr').html("");
+    });
+    $('input[name=lname]').keyup(function () {
+        $('#lnameErr').html("");
+    });
+    $('input[name=email]').keyup(function () {
+        $('#emailErr').html("");
+    });
+    $('input[name=phone]').keyup(function () {
+        $('#phoneErr').html("");
+    });
+    $('input[name=password]').keyup(function () {
+        $('#passwordErr').html("");
+    });
+    $('input[name=cpassword]').keyup(function () {
+        $('#cpasswordErr').html("");
+    });
+    $('input[name=gender]').click(function () {
+        $('#genderErr').html("");
+    });
+
+    $('#showpassword').click(function () {
         var type = $('#password').attr('type');
-        if(type == 'password'){
+        if (type == 'password') {
             $('#password').attr('type', 'text');
-        }else{
+        } else {
             $('#password').attr('type', 'password');
         }
         return false;
     });
 
-    $('#showcpassword').click(function(){
+    $('#showcpassword').click(function () {
         var type = $('#cpassword').attr('type');
-        if(type == 'password'){
+        if (type == 'password') {
             $('#cpassword').attr('type', 'text');
-        }else{
+        } else {
             $('#cpassword').attr('type', 'password');
         }
         return false;
@@ -159,7 +185,7 @@ $(document).ready(function () {
 // <!-- script for delete confirmation -->
 function confirmation() {
     var result = confirm("Are you sure to delete?");
-    if (!result){
+    if (!result) {
         return false;
     }
 }

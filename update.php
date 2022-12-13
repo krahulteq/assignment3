@@ -265,6 +265,7 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
                     <a href="users.php">Back</a>
                 </div>
                 <div class="col-md-3">
+                    <input type="text" class="mysubmit" name="mysubmit" id="mysubmit" value="" style="display: none;">
                     <button type="submit" name="update" id="update" class="btn btn-primary">Update</button>
                 </div>
             </form>
