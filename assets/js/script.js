@@ -161,6 +161,7 @@ $(document).ready(function () {
         $('#genderErr').html("");
     });
 
+    // show hide password
     $('#showpassword').click(function () {
         var type = $('#password').attr('type');
         if (type == 'password') {
