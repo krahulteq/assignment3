@@ -7,16 +7,8 @@ $errorcheck = 1;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $errorcheck = 0;
-
-    $fname = trim($_POST['fname']);
-    $lname = trim($_POST['lname']);
-    $email = trim($_POST['email']);
-    $phone = trim($_POST['phone']);
-    $password = trim($_POST['password']);
-    $cpassword = trim($_POST['cpassword']);
-    $gender = trim($_POST['gender']);
     $created_date = date("l jS \of F Y h:i:s A");
-
+    
     // file validation
     $target_dir = "assets/images/";
     $file = $_FILES['file']['name'];
@@ -24,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
     $check = getimagesize($_FILES["file"]["tmp_name"]);
     $allowed_image_extension = array("png", "jpg", "jpeg");
-
+    
     // file validation
     if (empty($_FILES["file"]["name"])) {
         $fileErr = 'Please select image';
@@ -38,8 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $fileErr = 'Sorry, only JPG, JPEG & PNG files are allowed.';
         $errorcheck = 1;
     }
-
+    
     // first name validation
+    $fname = trim($_POST['fname']);
     if (empty($fname)) {
         $fnameErr = "Please enter your first name";
         $errorcheck = 1;
@@ -50,8 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $fnameErr = "Please enter at least 3 characters";
         $errorcheck = 1;
     }
-
+    
     // last name validation
+    $lname = trim($_POST['lname']);
     if (empty($lname)) {
         $lnameErr = "Please enter your last name";
         $errorcheck = 1;
@@ -62,8 +56,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $lnameErr = "Please enter at least 3 characters";
         $errorcheck = 1;
     }
-
+    
     // email validation
+    $email = trim($_POST['email']);
     $sql = " SELECT * FROM `users` WHERE `email` = '$email'";
     $result = mysqli_query($conn, $sql);
     $num = mysqli_num_rows($result);
@@ -77,8 +72,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $emailErr = "Email already exist";
         $errorcheck = 1;
     }
-
+    
     // phone number validation
+    $phone = trim($_POST['phone']);
     if (empty($phone)) {
         $phoneErr = "Please enter your phone number";
         $errorcheck = 1;
@@ -89,14 +85,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $phoneErr = "Enter 10 digit only";
         $errorcheck = 1;
     }
-
+    
     // password validation
+    $password = trim($_POST['password']);
     if (empty($password)) {
         $passwordErr = "Please enter your password";
         $errorcheck = 1;
     }
-
+    
     // confirm password validation
+    $cpassword = trim($_POST['cpassword']);
     if (empty($cpassword)) {
         $cpasswordErr = "Please enter your confirm password";
         $errorcheck = 1;
@@ -104,21 +102,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cpasswordErr = "confirm password not matched with password";
         $errorcheck = 1;
     }
-
+    
     // gender validation
+    $gender = trim($_POST['gender']);
     if (empty($gender)) {
         $genderErr = "Please select your gender";
         $errorcheck = 1;
     }
-
+    
     if ($errorcheck == 0) {
-
+        
         // insertion data in database 
         $sql = "INSERT INTO users (first_name, last_name, email, phone_number, password, gender, file, created_date, modified_date) 
         VALUES ('$fname','$lname','$email','$phone','$password','$gender', '$file', '$created_date', '$modified_date') ";
         $result = mysqli_query($conn, $sql);
 
         if ($result) {
+            // file moving in upload folder
             move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
             header("location: login.php");
         } else {

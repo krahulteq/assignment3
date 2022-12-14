@@ -1,15 +1,18 @@
 <?php
+
 require_once 'conn.php';
+// define variables
+$fname = $lname = $email = $phone = $password = $cpassword = $gender = $created_date = $modified_date = "";
+$fnameErr = $lnameErr = $emailErr = $phoneErr = $passwordErr = $cpasswordErr = $genderErr = "";
+$errorcheck = 1;
+
 if (isset($_SESSION['id']) && isset($_GET['id'])) {
+
     require_once 'updateprocess.php';
+
 ?>
     <!doctype html>
     <html lang="en">
-    <style>
-        .error {
-            color: red;
-        }
-    </style>
 
     <head>
         <!-- Required meta tags -->

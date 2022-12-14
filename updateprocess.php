@@ -1,8 +1,4 @@
 <?php
-// define variables
-$fname = $lname = $email = $phone = $password = $cpassword = $gender = $created_date = $modified_date = "";
-$fnameErr = $lnameErr = $emailErr = $phoneErr = $passwordErr = $cpasswordErr = $genderErr = "";
-$errorcheck = 1;
 
 $id = $_GET['id'];
 $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
@@ -20,13 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $errorcheck = 0;
 
-    $fname = trim($_POST['fname']);
-    $lname = trim($_POST['lname']);
-    $email = trim($_POST['email']);
-    $phone = trim($_POST['phone']);
-    $password = trim($_POST['password']);
-    $cpassword = trim($_POST['cpassword']);
-    $gender = trim($_POST['gender']);
     $modified_date = date("l jS \of F Y h:i:s A");
 
     // file validation
@@ -50,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // first name validation
+    $fname = trim($_POST['fname']);
     if (empty($fname)) {
         $fnameErr = "Please enter your first name";
         $errorcheck = 1;
@@ -62,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // last name validation
+    $lname = trim($_POST['lname']);
     if (empty($lname)) {
         $lnameErr = "Please enter your last name";
         $errorcheck = 1;
@@ -74,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // email validation
+    $email = trim($_POST['email']);
     $sql = " SELECT * FROM `users` WHERE `email` = '$email'";
     $result = mysqli_query($conn, $sql);
     $num = mysqli_num_rows($result);
@@ -91,6 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // phone number validation
+    $phone = trim($_POST['phone']);
     if (empty($phone)) {
         $phoneErr = "Please enter your phone number";
         $errorcheck = 1;
@@ -103,12 +96,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // password validation
+    $password = trim($_POST['password']);
     if (empty($password)) {
         $passwordErr = "Please enter your password";
         $errorcheck = 1;
     }
 
     // confirm password validation
+    $cpassword = trim($_POST['cpassword']);
     if (empty($cpassword)) {
         $cpasswordErr = "Please enter your confirm password";
         $errorcheck = 1;
@@ -118,6 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // gender validation
+    $gender = trim($_POST['gender']);
     if (empty($gender)) {
         $genderErr = "Please select your gender";
         $errorcheck = 1;
