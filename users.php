@@ -18,54 +18,40 @@ if (isset($_SESSION['id'])) {
     </head>
 
     <body>
-        <!----------------------------------- navbar -------------------------------------->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Logo</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="logout.php">Logout</a>
-                        </li>
-                    </ul>
-                </div>
+        <?php
+        require_once 'navbar.php';
+        
+        $success = 0;
+        $success = $_GET['success'];
+        if ($success == 1) {
+        ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span>Data updated successfully</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        </nav>
-            <?php
-            $success = 0;
-            $success = $_GET['success'];
-            if ($success == 1) {
-            ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <span>Data updated successfully</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            <?php
-            }
-            $loginsuccess = 0;
-            $loginsuccess = $_GET['loginsuccess'];
-            if ($loginsuccess == 1) {
-            ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <span>Logged in successfully</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            <?php
-            }
-            $deletesuccess = 0;
-            $deletesuccess = $_GET['deletesuccess'];
-            if ($deletesuccess == 1) {
-            ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <span>Data deleted successfully</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            <?php
-            }
-            ?>
+        <?php
+        }
+        $loginsuccess = 0;
+        $loginsuccess = $_GET['loginsuccess'];
+        if ($loginsuccess == 1) {
+        ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span>Logged in successfully</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php
+        }
+        $deletesuccess = 0;
+        $deletesuccess = $_GET['deletesuccess'];
+        if ($deletesuccess == 1) {
+        ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span>Data deleted successfully</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php
+        }
+        ?>
         <div class="container">
             <table class="table">
                 <thead>

@@ -5,7 +5,7 @@ require_once 'conn.php';
 // define variables
 $email = $password = "";
 $emailErr = $passwordErr = $validErr = "";
-$num = 0;
+$showError = 0;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       header("location: users.php?loginsuccess=1");
     } else {
       echo mysqli_error($conn);
-      $num = 2;
+      $showError = 1;
       $validErr = "Please enter correct details for login...";
     }
   }
@@ -66,41 +66,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-  <!----------------------------------- navbar -------------------------------------->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Logo</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-          <?php
-          if (isset($_SESSION['id'])) {
-          ?>
-
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="logout.php">Logout</a>
-            </li>
-
-          <?php
-          } else {
-          ?>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.php">Register</a>
-            </li>
-
-          <?php
-          }
-          ?>
-
-        </ul>
-      </div>
-    </div>
-  </nav>
   <?php
-  if ($num == 2) {
+  require_once 'navbar.php';
+  if ($showError == 1) {
   ?>
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
       <span><?php echo $validErr ?></span>
