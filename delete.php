@@ -6,7 +6,7 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
     $sql = "UPDATE `users` SET `soft_delete` = '0' WHERE `id` = '$id'";
     $result = mysqli_query($conn, $sql);
     if ($result) {
-        header("location: users.php?deleted successfully");
+        header("location: users.php?deletesuccess=1");
     }
 } else {
     header("location: login.php");

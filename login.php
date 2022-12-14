@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check for login successfully!
     if ($num == 1) {
       $_SESSION['id'] = $data['id'];
-      header("location: users.php");
+      header("location: users.php?loginsuccess=1");
     } else {
       echo mysqli_error($conn);
       $num = 2;

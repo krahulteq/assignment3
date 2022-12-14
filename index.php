@@ -186,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1>Please Register Here</h1>
         <hr><br>
         <form class="row g-3" action="" method="post" id="form" enctype="multipart/form-data">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label for="file" class="form-label">Upload file</label>
                 <span class="error" id="fileErr">*<?php echo $fileErr; ?></span>
                 <input type="file" class="form-control" id="file" name="file">

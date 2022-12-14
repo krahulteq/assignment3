@@ -141,7 +141,7 @@ if (isset($_SESSION['id']) && isset($_GET['id'])) {
             $result = mysqli_query($conn, $sql);
 
             if ($result) {
-                header("location: users.php?updated successful");
+                header("location: users.php?success=1");
             } else {
                 echo mysqli_error($conn);
             }
