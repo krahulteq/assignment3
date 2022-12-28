@@ -3,7 +3,7 @@
 require_once 'conn.php';
 // define variables
 $fname = $lname = $email = $phone = $password = $cpassword = $gender = $created_date = $modified_date = "";
-$fnameErr = $lnameErr = $emailErr = $phoneErr = $passwordErr = $cpasswordErr = $genderErr = "";
+$fnameErr = $lnameErr = $emailErr = $phoneErr = $passwordErr = $cpasswordErr = $genderErr = $file2 = "";
 $errorcheck = 1;
 
 if (isset($_SESSION['id']) && isset($_GET['id'])) {
